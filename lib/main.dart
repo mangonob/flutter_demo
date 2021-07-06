@@ -10,44 +10,101 @@ void main() {
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    late Color color = Theme.of(context).primaryColor;
+
+    Widget buttonSection = Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildButtonColumn(color, Icons.call, 'CALL'),
+          _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
+          _buildButtonColumn(color, Icons.share, 'SHARE'),
+        ],
+      ),
+    );
+
     return Scaffold(
-      body: ListViewExample(),
+      appBar: AppBar(
+        title: Text("Flutter layout demo"),
+        shadowColor: Colors.black.withAlpha(0),
+        toolbarHeight: 44,
+      ),
+      body: ListView(
+        children: [
+          Image.asset(
+            'assets/images/lake.jpg',
+            width: 600,
+            height: 240,
+            fit: BoxFit.cover,
+          ),
+          titleSection,
+          buttonSection,
+          textSection,
+        ],
+      ),
     );
   }
-}
 
-class ListViewExample extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(children: [
-      _tile('CineArts at the Empire', '85 W Portal Ave', Icons.theaters),
-      _tile('The Castro Theater', '429 Castro St', Icons.theaters),
-      _tile('Alamo Drafthouse Cinema', '2550 Mission St', Icons.theaters),
-      _tile('Roxie Theater', '3117 16th St', Icons.theaters),
-      _tile('United Artists Stonestown Twin', '501 Buckingham Way',
-          Icons.theaters),
-      _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters),
-      Divider(),
-      _tile('K\'s Kitchen', '757 Monterey Blvd', Icons.restaurant),
-      _tile('Emmy\'s Restaurant', '1923 Ocean Ave', Icons.restaurant),
-      _tile('Chaiya Thai Restaurant', '272 Claremont Blvd', Icons.restaurant),
-      _tile('La Ciccia', '291 30th St', Icons.restaurant),
-    ]);
-  }
-
-  Widget _tile(String title, String subtitle, IconData icon) {
-    return ListTile(
-      title: Text(
-        title,
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
+  final Widget titleSection = Container(
+    padding: const EdgeInsets.all(32),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 8),
+                child: Text(
+                  "Oeschinen Lake Campground",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Text(
+                "Kandersteg, Switzerland",
+                style: TextStyle(color: Colors.grey[500]),
+              ),
+            ],
+          ),
         ),
-      ),
-      subtitle: Text(subtitle),
-      leading: Icon(
-        icon,
-        color: Colors.blue[500],
-      ),
+        Icon(Icons.star, color: Colors.red[500]),
+        Text("41"),
+      ],
+    ),
+  );
+
+  Column _buildButtonColumn(Color color, IconData icon, String label) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, color: color),
+        Container(
+          margin: EdgeInsets.only(top: 8),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: color,
+            ),
+          ),
+        )
+      ],
     );
   }
+
+  final Widget textSection = Container(
+    padding: EdgeInsets.all(32),
+    child: Text(
+      'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
+      'Alps. Situated 1,578 meters above sea level, it is one of the '
+      'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
+      'half-hour walk through pastures and pine forest, leads you to the '
+      'lake, which warms to 20 degrees Celsius in the summer. Activities '
+      'enjoyed here include rowing, and riding the summer toboggan run.',
+      softWrap: true,
+    ),
+  );
 }
