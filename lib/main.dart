@@ -1,10 +1,11 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/playground.dart';
+import 'package:flutter_demo/tabbed.dart';
 
 void main() {
-  runApp(MaterialApp(
-    title: "My app",
-    home: Playground(),
-  ));
+  runApp(
+    MaterialApp(
+      title: "My app",
+      home: Tabbed(),
+    ),
+  );
 }

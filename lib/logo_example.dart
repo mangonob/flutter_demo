@@ -39,6 +39,17 @@ class LogoExampleState extends State<LogoExample>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        toolbarHeight: 44,
+        title: Text(
+          "Flutter Logo",
+          style: TextStyle(
+            fontSize: 18,
+            color: Color(0xFF181818),
+          ),
+        ),
+      ),
       body: Center(
         child: InkWell(
           onTap: () {

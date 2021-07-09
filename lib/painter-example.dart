@@ -4,6 +4,17 @@ class PainterExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        toolbarHeight: 44,
+        title: Text(
+          "Painter",
+          style: TextStyle(
+            fontSize: 18,
+            color: Color(0xFF181818),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Center(
         child: Container(
@@ -30,7 +41,6 @@ class Painter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    print(oldDelegate);
     return false;
   }
 }
