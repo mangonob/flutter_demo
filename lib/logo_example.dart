@@ -40,37 +40,32 @@ class LogoExampleState extends State<LogoExample>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  height: 300,
-                  width: 300,
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  transformAlignment: FractionalOffset.center,
-                  height: _sizeAnimation.value.height,
-                  width: _sizeAnimation.value.width,
-                  transform: _transformAnimation.value,
-                  child: FlutterLogo(),
-                )
-              ],
-            ),
-            TextButton(
-                onPressed: () {
-                  setState(() {
-                    _isForward = !_isForward;
-                    _isForward
-                        ? _animationController.forward()
-                        : _animationController.reverse();
-                  });
-                },
-                child: Text(_isForward ? "Reverse" : "Forward")),
-          ],
+        child: InkWell(
+          onTap: () {
+            setState(() {
+              _isForward = !_isForward;
+              _isForward
+                  ? _animationController.forward()
+                  : _animationController.reverse();
+            });
+          },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                height: 300,
+                width: 300,
+              ),
+              Container(
+                padding: EdgeInsets.all(16),
+                transformAlignment: FractionalOffset.center,
+                height: _sizeAnimation.value.height,
+                width: _sizeAnimation.value.width,
+                transform: _transformAnimation.value,
+                child: FlutterLogo(),
+              )
+            ],
+          ),
         ),
       ),
     );
