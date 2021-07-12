@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/routes/routes.dart';
 
 class LogoExample extends StatefulWidget {
   @override
@@ -52,6 +53,9 @@ class LogoExampleState extends State<LogoExample>
       ),
       body: Center(
         child: InkWell(
+          onDoubleTap: () {
+            Navigator.pushNamed(context, Routes.first);
+          },
           onTap: () {
             setState(() {
               _isForward = !_isForward;

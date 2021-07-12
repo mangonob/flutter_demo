@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/logo_example.dart';
-import 'package:flutter_demo/painter-example.dart';
+import 'package:flutter_demo/painter_example.dart';
 import 'package:flutter_demo/playground.dart';
 
 class Tabbed extends StatefulWidget {
