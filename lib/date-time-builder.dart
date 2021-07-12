@@ -2,14 +2,38 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+/// Widget that builds it self base on current time.
+/// ```dart
+/// @override
+/// Widget build(BuildContext context) {
+///   return DateTimeBuilder(
+///     builder: (ctx, time) {
+///       return Text(
+///         "Current Time: ${time.toIso8601String()}",
+///         style: TextStyle(
+///           fontSize: 16,
+///           color: Color(0xFF181818),
+///         ),
+///       );
+///     },
+///   );
+/// }
+/// ```
 class DateTimeBuilder extends StatefulWidget {
-  final Function(BuildContext context, DateTime time) builder;
-  final Function(DateTime time)? onTick;
+  /// The build strategy currently used by this builder
+  ///
+  /// The builder is provided with an [DateTime] object just `DateTime.now()`.
+  final Widget Function(BuildContext context, DateTime time) builder;
+  final Function(DateTime time, Timer timer)? onTick;
+
+  /// [Duration] to update widget, default is `Duration(second: 1)`.
+  final Duration? duration;
 
   DateTimeBuilder({
     Key? key,
     required this.builder,
     this.onTick,
+    this.duration,
   }) : super(key: key);
 
   @override
@@ -25,10 +49,10 @@ class _DateTimeBuilderState extends State<DateTimeBuilder> {
     super.initState();
 
     _time = DateTime.now();
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(widget.duration ?? Duration(seconds: 1), (timer) {
       final now = DateTime.now();
 
-      if (widget.onTick != null) widget.onTick!(now);
+      if (widget.onTick != null) widget.onTick!(now, timer);
       setState(() => _time = now);
     });
   }
