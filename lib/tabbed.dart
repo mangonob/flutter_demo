@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/logo_example.dart';
 import 'package:flutter_demo/painter_example.dart';
 import 'package:flutter_demo/playground.dart';
+import 'package:flutter_demo/sliver_example.dart';
 
 class Tabbed extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class TabbedState extends State<Tabbed> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -38,6 +39,7 @@ class TabbedState extends State<Tabbed> with SingleTickerProviderStateMixin {
                 Playground(),
                 PainterExample(),
                 LogoExample(),
+                SliverExample(),
               ],
               index: _tabController.index,
             ),
@@ -75,6 +77,12 @@ class TabbedState extends State<Tabbed> with SingleTickerProviderStateMixin {
                     ),
                     Icon(
                       _selectedIndex == 2 ? Icons.person : Icons.person_outline,
+                      color: Colors.orange,
+                    ),
+                    Icon(
+                      _selectedIndex == 3
+                          ? Icons.home_filled
+                          : Icons.home_outlined,
                       color: Colors.orange,
                     ),
                   ],
