@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/charts_example.dart';
 import 'package:flutter_demo/logo_example.dart';
-import 'package:flutter_demo/painter_example.dart';
 import 'package:flutter_demo/playground.dart';
 import 'package:flutter_demo/sliver_example.dart';
 
@@ -37,7 +37,7 @@ class TabbedState extends State<Tabbed> with SingleTickerProviderStateMixin {
             child: IndexedStack(
               children: [
                 Playground(),
-                PainterExample(),
+                ChartsExample(),
                 LogoExample(),
                 SliverExample(),
               ],

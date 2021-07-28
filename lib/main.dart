@@ -1,9 +1,12 @@
+import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/only_text.dart';
 import 'package:flutter_demo/routes/routes.dart';
 import 'package:flutter_demo/tabbed.dart';
 
 void main() {
+  StyleFactory.style = CustomChartStyle();
+
   runApp(
     MaterialApp(
       routes: {
@@ -15,4 +18,9 @@ void main() {
       home: Tabbed(),
     ),
   );
+}
+
+class CustomChartStyle extends MaterialStyle {
+  @override
+  Color get arcStrokeColor => Color.transparent;
 }
