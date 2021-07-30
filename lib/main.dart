@@ -1,8 +1,8 @@
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/only_text.dart';
+import 'package:flutter_demo/orientation.dart';
 import 'package:flutter_demo/routes/routes.dart';
-import 'package:flutter_demo/tabbed.dart';
 
 void main() {
   StyleFactory.style = CustomChartStyle();
@@ -15,7 +15,21 @@ void main() {
         Routes.third: (_) => OnlyText(text: "third"),
       },
       title: "My app",
-      home: Tabbed(),
+      home: Scaffold(
+        body: SafeArea(
+          top: true,
+          bottom: true,
+          child: OrientationWidget(
+            orientation: StatusBarOrientation.landscapeRight,
+            child: ListView(
+              children: List.generate(
+                1000,
+                (index) => ListTile(title: Text("Item: $index")),
+              ),
+            ),
+          ),
+        ),
+      ),
     ),
   );
 }
