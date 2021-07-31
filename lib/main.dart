@@ -1,7 +1,7 @@
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/only_text.dart';
-import 'package:flutter_demo/orientation.dart';
+import 'package:flutter_demo/orentation_example.dart';
 import 'package:flutter_demo/routes/routes.dart';
 
 void main() {
@@ -16,19 +16,7 @@ void main() {
       },
       title: "My app",
       home: Scaffold(
-        body: SafeArea(
-          top: true,
-          bottom: true,
-          child: OrientationWidget(
-            orientation: StatusBarOrientation.landscapeRight,
-            child: ListView(
-              children: List.generate(
-                1000,
-                (index) => ListTile(title: Text("Item: $index")),
-              ),
-            ),
-          ),
-        ),
+        body: OrentationExampleEnter(),
       ),
     ),
   );
