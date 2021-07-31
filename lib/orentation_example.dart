@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_demo/orientation.dart';
@@ -31,21 +33,54 @@ class _OrentationExampleState extends State<OrentationExample> {
           body: SafeArea(
             top: true,
             bottom: true,
-            child: OrientationWidget(
-              orientation: StatusBarOrientation.landscapeRight,
+            child: RotatedBox(
+              quarterTurns: 1,
               child: Scrollbar(
                 child: ListView(
                   children: List.generate(
                     1000,
                     (index) => ListTile(
-                      title: Popover(
-                        child: Text("Item: $index"),
-                        popoverBuilder: (_) => Container(
-                          color: Colors.red,
-                          width: 100,
-                          height: 100,
-                          child: Center(child: Text("Some")),
-                        ),
+                      onLongPress: () => Navigator.pop(context),
+                      title: Row(
+                        children: [
+                          Popover(
+                            child: Text("Item: $index"),
+                            popoverBuilder: (_) => Container(
+                              color: Colors.red,
+                              width: 100,
+                              height: 100,
+                              child: Center(child: Text("Some")),
+                            ),
+                          ),
+                          Popover(
+                            child: Text("Item: $index"),
+                            popoverBuilder: (_) => Container(
+                              color: Colors.red,
+                              width: 100,
+                              height: 100,
+                              child: Center(child: Text("Some")),
+                            ),
+                          ),
+                          Popover(
+                            child: Text("Item: $index"),
+                            popoverBuilder: (_) => Container(
+                              color: Colors.red,
+                              width: 100,
+                              height: 100,
+                              child: Center(child: Text("Some")),
+                            ),
+                          ),
+                          Popover(
+                            child: Text("Item: $index"),
+                            popoverBuilder: (_) => Container(
+                              color: Colors.red,
+                              width: 100,
+                              height: 100,
+                              child: Center(child: Text("Some")),
+                            ),
+                          ),
+                          Expanded(child: SizedBox()),
+                        ],
                       ),
                     ),
                   ),
@@ -70,6 +105,7 @@ class OrentationExampleEnter extends StatelessWidget {
               context,
               PageRouteBuilder(
                 pageBuilder: (ctx, a1, a2) => OrentationExample(),
+                transitionDuration: Duration(seconds: 0),
               ),
             );
           },
