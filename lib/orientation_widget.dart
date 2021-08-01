@@ -18,15 +18,15 @@ class OrientationWidget extends StatefulWidget {
 class _OrientationWidgetState extends State<OrientationWidget> {
   initState() {
     super.initState();
-    // SystemChrome.setPreferredOrientations([widget.orientation]);
+    SystemChrome.setPreferredOrientations([widget.orientation]);
   }
 
   dispose() {
     super.dispose();
-    // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
   Widget build(BuildContext context) {
-    return RotatedBox(quarterTurns: 1, child: widget.child);
+    return widget.child;
   }
 }
