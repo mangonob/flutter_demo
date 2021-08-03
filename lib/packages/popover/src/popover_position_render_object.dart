@@ -9,6 +9,7 @@ class PopoverPositionRenderObject extends RenderShiftedBox {
   Rect? _attachRect;
   BoxConstraints? _additionalConstraints;
   double? arrowHeight;
+  Size? _containerSize;
 
   PopoverPositionRenderObject({
     required this.arrowHeight,
@@ -16,11 +17,16 @@ class PopoverPositionRenderObject extends RenderShiftedBox {
     Rect? attachRect,
     BoxConstraints? constraints,
     PopoverDirection? direction,
+    Size? containerSize,
   }) : super(child) {
     _attachRect = attachRect;
     _additionalConstraints = constraints;
     _direction = direction;
+    _containerSize = containerSize;
   }
+
+  Size get containerSize =>
+      _containerSize ?? Size(Utils().screenWidth, Utils().screenHeight);
 
   BoxConstraints? get additionalConstraints => _additionalConstraints;
   set additionalConstraints(BoxConstraints? value) {
@@ -98,12 +104,12 @@ class PopoverPositionRenderObject extends RenderShiftedBox {
     var offset = 0.0;
 
     if (attachRect!.left > size.width / 2 &&
-        Utils().screenWidth - attachRect!.right > size.width / 2) {
+        containerSize.width - attachRect!.right > size.width / 2) {
       offset = attachRect!.left + attachRect!.width / 2 - size.width / 2;
     } else if (attachRect!.left < size.width / 2) {
       offset = arrowHeight!;
     } else {
-      offset = Utils().screenWidth - arrowHeight! - size.width;
+      offset = containerSize.width - arrowHeight! - size.width;
     }
     return offset;
   }
@@ -112,12 +118,12 @@ class PopoverPositionRenderObject extends RenderShiftedBox {
     var offset = 0.0;
 
     if (attachRect!.top > size.height / 2 &&
-        Utils().screenHeight - attachRect!.bottom > size.height / 2) {
+        containerSize.height - attachRect!.bottom > size.height / 2) {
       offset = attachRect!.top + attachRect!.height / 2 - size.height / 2;
     } else if (attachRect!.top < size.height / 2) {
       offset = arrowHeight!;
     } else {
-      offset = Utils().screenHeight - arrowHeight! - size.height;
+      offset = containerSize.height - arrowHeight! - size.height;
     }
     return offset;
   }

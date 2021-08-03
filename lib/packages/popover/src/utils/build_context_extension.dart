@@ -8,6 +8,19 @@ extension BuildContextExtension on BuildContext {
 
   static Offset getWidgetLocalToGlobal(BuildContext context) {
     final box = context.findRenderObject() as RenderBox?;
-    return box == null ? Offset.zero : box.localToGlobal(Offset.zero);
+    final containerBox =
+        Navigator.of(context).context.findRenderObject() as RenderBox?;
+    if (containerBox != null) {
+      return box == null
+          ? Offset.zero
+          : containerBox.globalToLocal(box.localToGlobal(Offset.zero));
+    } else {
+      return box == null ? Offset.zero : box.localToGlobal(Offset.zero);
+    }
+  }
+
+  static Size? getContainerSize(BuildContext context) {
+    final box = Navigator.of(context).context.findRenderObject() as RenderBox?;
+    return box?.semanticBounds.size;
   }
 }

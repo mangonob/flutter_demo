@@ -47,6 +47,7 @@ class _PopoverItemState extends State<PopoverItem> {
   late Offset offset;
   late Rect bounds;
   late Rect attachRect;
+  Size? containerSize;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +62,7 @@ class _PopoverItemState extends State<PopoverItem> {
               constraints: constraints,
               direction: widget.direction,
               arrowHeight: widget.arrowHeight,
+              containerSize: containerSize,
               child: PopoverContext(
                 attachRect: attachRect,
                 animation: widget.animation,
@@ -84,6 +86,7 @@ class _PopoverItemState extends State<PopoverItem> {
 
   void _configure() {
     final box = widget.context.findRenderObject() as RenderBox;
+    containerSize = BuildContextExtension.getContainerSize(context);
     if (mounted && box.owner != null) {
       _configureConstraints();
       _configureRect();

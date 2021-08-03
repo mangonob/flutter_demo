@@ -94,7 +94,7 @@ Future<T?> showPopover<T extends Object?>({
           BoxConstraints.tightFor(width: width, height: height)
       : constraints;
 
-  return Navigator.of(context, rootNavigator: true).push<T>(
+  return Navigator.of(context).push<T>(
     RawDialogRoute<T>(
       pageBuilder: (_, __, ___) {
         return Builder(builder: (_) => const SizedBox.shrink());
