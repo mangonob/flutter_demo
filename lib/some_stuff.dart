@@ -1,3 +1,4 @@
+import 'package:app_popup_menu/app_popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/widgets/popover.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -43,6 +44,41 @@ class Others extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      Popover(
+                        child: Text("Popover"),
+                        popoverBuilder: (ctx) => Column(
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 50,
+                              color: Colors.red,
+                            ),
+                            Container(
+                              width: 100,
+                              height: 50,
+                              color: Colors.green,
+                            ),
+                          ],
+                        ),
+                      ),
+                      AppPopupMenu(
+                        initialValue: 2,
+                        child: Text("Dropdown"),
+                        menuItems: [
+                          PopupMenuItem(
+                            child: Text("A"),
+                            value: 1,
+                          ),
+                          PopupMenuItem(
+                            child: Text("A"),
+                            value: 2,
+                          ),
+                        ],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: EdgeInsets.zero,
+                      ),
                       DropdownButton(
                         onChanged: (v) {},
                         items: [
@@ -56,7 +92,7 @@ class Others extends StatelessWidget {
                           EasyLoading.showInfo("Some Info");
                         },
                         child: Text("EasyLoading"),
-                      )
+                      ),
                     ],
                   ),
                 ),
