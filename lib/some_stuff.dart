@@ -10,14 +10,37 @@ class SomeStuff extends StatelessWidget {
       color: Colors.white,
       child: Scaffold(
         body: Center(
-          child: TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (ctx) => Others()),
-              );
-            },
-            child: Text("Push"),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (ctx) => Others()),
+                  );
+                },
+                child: Text("Push"),
+              ),
+              Popover(
+                child: Text("Popover"),
+                popoverBuilder: (ctx) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 50,
+                      color: Colors.red,
+                    ),
+                    Container(
+                      width: 100,
+                      height: 50,
+                      color: Colors.green,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -36,65 +59,60 @@ class Others extends StatelessWidget {
           home: Container(
             color: Colors.white,
             child: Scaffold(
-              body: GestureDetector(
-                onDoubleTap: () {
-                  Navigator.pop(context);
-                },
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Popover(
-                        child: Text("Popover"),
-                        popoverBuilder: (ctx) => Column(
-                          children: [
-                            Container(
-                              width: 100,
-                              height: 50,
-                              color: Colors.red,
-                            ),
-                            Container(
-                              width: 100,
-                              height: 50,
-                              color: Colors.green,
-                            ),
-                          ],
-                        ),
-                      ),
-                      AppPopupMenu(
-                        initialValue: 2,
-                        child: Text("Dropdown"),
-                        menuItems: [
-                          PopupMenuItem(
-                            child: Text("A"),
-                            value: 1,
+              body: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Popover(
+                      child: Text("Popover"),
+                      popoverBuilder: (ctx) => Column(
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 50,
+                            color: Colors.red,
                           ),
-                          PopupMenuItem(
-                            child: Text("A"),
-                            value: 2,
+                          Container(
+                            width: 100,
+                            height: 50,
+                            color: Colors.green,
                           ),
                         ],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    AppPopupMenu(
+                      initialValue: 2,
+                      child: Text("Dropdown"),
+                      menuItems: [
+                        PopupMenuItem(
+                          child: Text("A"),
+                          value: 1,
                         ),
-                        padding: EdgeInsets.zero,
+                        PopupMenuItem(
+                          child: Text("A"),
+                          value: 2,
+                        ),
+                      ],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      DropdownButton(
-                        onChanged: (v) {},
-                        items: [
-                          DropdownMenuItem(child: Text("A"), value: 0),
-                          DropdownMenuItem(child: Text("A"), value: 1),
-                          DropdownMenuItem(child: Text("A"), value: 2),
-                        ],
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          EasyLoading.showInfo("Some Info");
-                        },
-                        child: Text("EasyLoading"),
-                      ),
-                    ],
-                  ),
+                      padding: EdgeInsets.zero,
+                    ),
+                    DropdownButton(
+                      onChanged: (v) {},
+                      items: [
+                        DropdownMenuItem(child: Text("A"), value: 0),
+                        DropdownMenuItem(child: Text("A"), value: 1),
+                        DropdownMenuItem(child: Text("A"), value: 2),
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        EasyLoading.showInfo("Some Info");
+                      },
+                      child: Text("EasyLoading"),
+                    ),
+                  ],
                 ),
               ),
             ),

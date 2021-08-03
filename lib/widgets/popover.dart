@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:popover/popover.dart';
+import 'package:flutter_demo/packages/popover/popover.dart';
 
 /// 气泡弹窗
 /// Widget child 宿主组件，该组件会被直接渲染，点击时显示气泡
