@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:popover/popover.dart';
+import 'package:flutter_demo/popover_overlay/popover_overlay.dart';
 
 /// 气泡弹窗
 /// Widget child 宿主组件，该组件会被直接渲染，点击时显示气泡
@@ -7,12 +7,12 @@ import 'package:popover/popover.dart';
 /// EdgeInsets padding 气泡组件的外边距
 class Popover extends StatelessWidget {
   final Widget child;
-  final WidgetBuilder popoverBuilder;
+  final Widget popover;
   final EdgeInsets padding;
   Popover({
     Key? key,
     required this.child,
-    required this.popoverBuilder,
+    required this.popover,
     this.padding = const EdgeInsets.symmetric(horizontal: 8),
   }) : super(key: key);
 
@@ -20,18 +20,7 @@ class Popover extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showPopover(
-          arrowHeight: 0,
-          arrowWidth: 0,
-          radius: 0,
-          backgroundColor: Colors.transparent,
-          shadow: [],
-          context: context,
-          bodyBuilder: (_) => Container(
-            padding: padding,
-            child: popoverBuilder(context),
-          ),
-        );
+        showPopoverOverlay(context, popover: popover);
       },
       child: child,
     );
