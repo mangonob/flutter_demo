@@ -6,14 +6,29 @@ import '../grid.dart';
 class LineChartGridPainter extends CustomPainter {
   final LineChartGrid? grid;
   final Area area;
+  final EdgeInsets padding;
 
   LineChartGridPainter({
     required this.grid,
     required this.area,
+    required this.padding,
   }) : super();
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.save();
+    canvas.translate(padding.left, padding.top);
+    _paintGrid(
+      canvas,
+      Size(
+        size.width - padding.left - padding.right,
+        size.height - padding.top - padding.bottom,
+      ),
+    );
+    canvas.restore();
+  }
+
+  _paintGrid(Canvas canvas, Size size) {
     if (this.grid == null) return;
 
     final grid = this.grid!;

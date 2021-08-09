@@ -6,9 +6,6 @@ import '../axis.dart';
 import '../grid.dart';
 import '../serie.dart';
 import '../style.dart';
-import 'axis_painter.dart';
-import 'grid_painter.dart';
-import 'serie_painter.dart';
 
 class LineChartPainter extends CustomPainter {
   final LineChartStyle? style;
@@ -39,34 +36,14 @@ class LineChartPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.save();
-    canvas.clipRect(Rect.fromLTWH(0, 0, size.width, size.height));
     canvas.translate(padding.left, padding.top);
-
-    final gridSize = Size(
-      size.width - padding.left - padding.right,
-      size.height - padding.top - padding.bottom,
+    _paintIndicator(
+      canvas,
+      Size(
+        size.width - padding.left - padding.right,
+        size.height - padding.top - padding.bottom,
+      ),
     );
-
-    LineChartGridPainter(
-      grid: grid,
-      area: area,
-    ).paint(canvas, gridSize);
-
-    LineChartAxisPainter(
-      xAxis: xAxis,
-      yAxis: yAxis,
-      rightAxis: rightAxis,
-      area: area,
-    ).paint(canvas, gridSize);
-
-    series
-        .map((s) => LineChartSeriesPainter(
-              serie: s,
-              area: area,
-            ))
-        .forEach((painter) => painter.paint(canvas, gridSize));
-
-    _paintIndicator(canvas, gridSize);
     canvas.restore();
   }
 

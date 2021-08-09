@@ -6,14 +6,29 @@ import '../serie.dart';
 class LineChartSeriesPainter extends CustomPainter {
   final LineChartSerie serie;
   final Area area;
+  final EdgeInsets padding;
 
   LineChartSeriesPainter({
     required this.serie,
     required this.area,
+    required this.padding,
   }) : super();
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.save();
+    canvas.translate(padding.left, padding.top);
+    _paint(
+      canvas,
+      Size(
+        size.width - padding.left - padding.right,
+        size.height - padding.top - padding.bottom,
+      ),
+    );
+    canvas.restore();
+  }
+
+  void _paint(Canvas canvas, Size size) {
     if (serie.data.isEmpty) return;
 
     final style = serie.style;

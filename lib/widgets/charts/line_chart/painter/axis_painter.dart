@@ -9,16 +9,31 @@ class LineChartAxisPainter extends CustomPainter {
   final LineChartAxis? yAxis;
   final LineChartAxis? rightAxis;
   final Area area;
+  final EdgeInsets padding;
 
   LineChartAxisPainter({
     this.xAxis,
     this.yAxis,
     this.rightAxis,
     required this.area,
+    required this.padding,
   }) : super();
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.save();
+    canvas.translate(padding.left, padding.top);
+    _paintAxis(
+      canvas,
+      Size(
+        size.width - padding.left - padding.right,
+        size.height - padding.top - padding.bottom,
+      ),
+    );
+    canvas.restore();
+  }
+
+  void _paintAxis(Canvas canvas, Size size) {
     if (xAxis != null) {
       canvas.save();
       canvas.translate(0, size.height);

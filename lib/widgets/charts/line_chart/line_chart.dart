@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'area.dart';
 import 'axis.dart';
 import 'grid.dart';
+import 'painter/axis_painter.dart';
+import 'painter/grid_painter.dart';
 import 'painter/line_chart_painter.dart';
+import 'painter/series_paint.dart';
 import 'serie.dart';
 import 'style.dart';
 
@@ -85,16 +88,35 @@ class _LineChartState extends State<LineChart> {
       child: Container(
         color: widget.backgroundColor ?? Colors.white,
         child: CustomPaint(
-          painter: LineChartPainter(
+          painter: LineChartGridPainter(
             grid: widget.grid,
-            xAxis: widget.xAxis,
-            yAxis: widget.yAxis,
-            rightAxis: widget.rightAxis,
-            series: widget.series,
-            activePosition: _activePosition,
-            padding: widget.padding,
-            style: widget.style,
             area: _area(),
+            padding: widget.padding,
+          ),
+          child: CustomPaint(
+            painter: LineChartAxisPainter(
+              xAxis: widget.xAxis,
+              yAxis: widget.yAxis,
+              rightAxis: widget.rightAxis,
+              area: _area(),
+              padding: widget.padding,
+            ),
+            child: LineChartSeriesPaint(
+              series: widget.series,
+              area: _area(),
+              padding: widget.padding,
+            ),
+            foregroundPainter: LineChartPainter(
+              grid: widget.grid,
+              xAxis: widget.xAxis,
+              yAxis: widget.yAxis,
+              rightAxis: widget.rightAxis,
+              series: widget.series,
+              activePosition: _activePosition,
+              padding: widget.padding,
+              style: widget.style,
+              area: _area(),
+            ),
           ),
         ),
       ),
