@@ -1,8 +1,8 @@
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/my_charts_example.dart';
 import 'package:flutter_demo/only_text.dart';
 import 'package:flutter_demo/routes/routes.dart';
-import 'package:flutter_demo/some_stuf.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
@@ -16,7 +16,7 @@ void main() {
         Routes.third: (_) => OnlyText(text: "third"),
       },
       title: "My app",
-      home: SomeStuff(),
+      home: MyChartsExample(),
       builder: EasyLoading.init(),
     ),
   );

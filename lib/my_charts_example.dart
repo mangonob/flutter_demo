@@ -1,62 +1,65 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/widgets/charts/charts.dart';
-import 'package:flutter_demo/widgets/charts/line_chart/axis.dart';
-import 'package:flutter_demo/widgets/charts/line_chart/serie.dart';
-import 'package:flutter_demo/widgets/charts/line_chart/style.dart';
+import 'package:flutter_demo/widgets/charts/pie_chart/pie_chart.dart';
+import 'package:flutter_demo/widgets/charts/pie_chart/serie.dart';
+import 'package:flutter_demo/widgets/charts/pie_chart/style.dart';
 
-class MyChartsExample extends StatelessWidget {
+class MyChartsExample extends StatefulWidget {
+  @override
+  _MyChartsExampleState createState() => _MyChartsExampleState();
+}
+
+class _MyChartsExampleState extends State<MyChartsExample> {
+  late List<num> datas;
+
+  @override
+  void initState() {
+    super.initState();
+
+    datas = List.generate(12, (index) => Random.secure().nextDouble());
+  }
+
   @override
   Widget build(BuildContext context) {
+    final serieStyle = PieChartSerieStyle(
+      leadingLineLength: 15,
+      labelStyle: TextStyle(
+        fontSize: 12,
+        color: Colors.grey,
+      ),
+      outerRadius: 65,
+      innerRadius: 44,
+      labelPadding: EdgeInsets.symmetric(horizontal: 4, vertical: -2),
+    );
+
     return Scaffold(
       body: SafeArea(
         child: Center(
           child: AspectRatio(
             aspectRatio: 1.5,
-            child: LineChart(
-              style: LineChartStyle().copyWith(
-                indicatorSize: Size(6, 6),
-                indicator: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(3),
-                ),
-              ),
-              xAxis: LineChartAxis(
-                style: LineChartAxisStyle(
-                  firstLabelAlignment: Alignment.bottomRight,
-                  labelAlignment: Alignment.bottomCenter,
-                  lastLabelAlignment: Alignment.bottomLeft,
-                  labelPadding: EdgeInsets.symmetric(vertical: 2),
-                ),
-              ),
+            child: PieChart(
               series: [
-                LineChartSerie(
-                  data: List.generate(
-                    100,
-                    (index) => {"x": index, "y": index * index},
-                  ),
-                  style: LineChartSerieStyle(
-                    lineStyle: LineStyle(color: Colors.red),
-                  ),
+                PieChartSerie(
+                  debugLabel: "default",
+                  style: serieStyle,
+                  data: datas,
+                  valueFn: (v, i) =>
+                      v / datas.fold(0, (a, b) => (a as num) + b),
+                  isSkipDrawWhenEmpty: false,
+                  colorFn: _colorFn,
+                  lineColorFn: _colorFn,
                 ),
-                LineChartSerie(
-                  data: List.generate(
-                    20,
-                    (index) => {"x": index * 10, "y": 400 * sqrt(index * 10)},
-                  ),
-                  style: LineChartSerieStyle(
-                    lineStyle: LineStyle(color: Colors.yellow),
-                  ),
-                  onActived: (data) {
-                    print(data);
-                  },
-                )
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Color? _colorFn(dynamic d, int index) {
+    final tween = ColorTween(begin: Colors.red[400], end: Colors.yellow[600]);
+    return tween.lerp(index.toDouble() / (datas.length - 1));
   }
 }
