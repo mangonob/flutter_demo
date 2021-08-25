@@ -33,6 +33,7 @@ dependencies:
   app_popup_menu: ^1.0.0
   quiver: ^3.0.1
   tuple: ^2.0.0
+  extended_nested_scroll_view: ^4.0.0
 
 dev_dependencies:
   flutter_test:

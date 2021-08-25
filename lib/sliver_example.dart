@@ -1,51 +1,79 @@
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
 
-class SliverExample extends StatelessWidget {
+class SliverExample extends StatefulWidget {
+  @override
+  _SliverExampleState createState() => _SliverExampleState();
+}
+
+class _SliverExampleState extends State<SliverExample>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 44,
+        backgroundColor: Colors.white,
+        title: Text(
+          "Title",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+          ),
+        ),
+      ),
       // No appbar provided to the Scaffold, only a body with a
       // CustomScrollView.
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            title: Text("Title"),
-            toolbarHeight: 44,
-          ),
-          SliverList(
-            // Use a delegate to build items as they're scrolled on screen.
-            delegate: SliverChildBuilderDelegate(
-              // The builder function returns a ListTile with a title that
-              // displays the index of the current item.
-              (context, index) => ListTile(
-                onTap: () {},
-                title: Text('Item #$index'),
+      body: ExtendedNestedScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        onlyOneScrollInBody: true,
+        headerSliverBuilder: (ctx, _) {
+          return [
+            SliverToBoxAdapter(
+              child: Container(
+                height: 100,
+                color: Colors.green,
               ),
-              // Builds 1000 ListTiles
-              childCount: 10,
             ),
-          ),
-          SliverPersistentHeader(
-            delegate: MyHeader(),
-            pinned: true,
-          ),
-          SliverList(
-            // Use a delegate to build items as they're scrolled on screen.
-            delegate: SliverChildBuilderDelegate(
-              // The builder function returns a ListTile with a title that
-              // displays the index of the current item.
-              (context, index) => ListTile(
-                onTap: () {},
-                title: Text('Item #$index'),
+            SliverToBoxAdapter(
+              child: Container(
+                height: 80,
+                color: Colors.orange,
               ),
-              // Builds 1000 ListTiles
-              childCount: 42,
             ),
-          ),
-        ],
+            SliverPersistentHeader(
+              delegate: MyHeader(),
+              pinned: true,
+            ),
+          ];
+        },
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            _SomeListView(),
+            _SomeListView(),
+            _SomeListView(),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class _SomeListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children:
+          List.generate(40, (index) => ListTile(title: Text("Item $index"))),
     );
   }
 }
