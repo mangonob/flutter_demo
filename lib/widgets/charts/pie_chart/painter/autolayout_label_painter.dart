@@ -11,7 +11,7 @@ class AutoLayoutLabelPainter extends CustomPainter {
 
   AutoLayoutLabelPainter({
     required this.series,
-    this.isAuxiliaryHidden = true,
+    this.isAuxiliaryHidden = false,
   });
 
   @override
@@ -61,7 +61,7 @@ class AutoLayoutLabelPainter extends CustomPainter {
         ? serie.values.map((v) => formatter(v))
         : serie.values.map((v) => (v * 100).toStringAsFixed(1) + "%");
 
-    return zip([serie.sectorRanges() as Iterable<dynamic>, labelsText])
+    return zip(<Iterable<dynamic>>[serie.sectorRanges(), labelsText])
         .map((pair) {
       final style = serie.style;
       final sectorRange = pair.first as List<num>;

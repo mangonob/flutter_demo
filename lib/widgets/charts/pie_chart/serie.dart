@@ -37,7 +37,7 @@ class PieChartSerie<D> {
     this.debugLabel,
   }) : this.style = PieChartSerieStyle.normal().merge(style);
 
-  List<List<num>>? sectorRanges() {
+  List<List<num>> sectorRanges() {
     final outerRadius = style.outerRadius!;
 
     final span = style.span!;
@@ -60,5 +60,7 @@ class PieChartSerie<D> {
       final endAngles = startAngles.sublist(1);
       return zip([startAngles, endAngles]).toList();
     }
+
+    return [];
   }
 }
