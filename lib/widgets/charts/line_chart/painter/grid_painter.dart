@@ -43,69 +43,30 @@ class LineChartGridPainter extends CustomPainter {
 
     _paintGridArea(canvas, size);
 
-    if (gridStyle.top != null) {
-      final top = gridStyle.top!;
-      canvas.drawLine(
-        size.topLeft(Offset.zero),
-        size.topRight(Offset.zero),
-        Paint()
-          ..strokeWidth = top.width
-          ..strokeCap = StrokeCap.square
-          ..color = top.color,
-      );
-    }
-
-    if (gridStyle.right != null) {
-      final right = gridStyle.right!;
-      canvas.drawLine(
-        size.topRight(Offset.zero),
-        size.bottomRight(Offset.zero),
-        Paint()
-          ..strokeWidth = right.width
-          ..strokeCap = StrokeCap.square
-          ..color = right.color,
-      );
-    }
-
-    if (gridStyle.bottom != null) {
-      final bottom = gridStyle.bottom!;
-      canvas.drawLine(
-        size.bottomLeft(Offset.zero),
-        size.bottomRight(Offset.zero),
-        Paint()
-          ..strokeWidth = bottom.width
-          ..color = bottom.color,
-      );
-    }
-
-    if (gridStyle.left != null) {
-      final left = gridStyle.left!;
-      canvas.drawLine(
-        size.topLeft(Offset.zero),
-        size.bottomLeft(Offset.zero),
-        Paint()
-          ..strokeWidth = left.width
-          ..color = left.color,
-      );
+    if (gridStyle.decoration != null) {
+      gridStyle.decoration!.createBoxPainter().paint(
+            canvas,
+            Offset.zero,
+            ImageConfiguration(size: size),
+          );
     }
   }
 
   _paintGridArea(Canvas canvas, Size size) {
     assert(this.grid != null);
     final grid = this.grid!;
-    if (grid.areaColors == null) return;
-    final gridColors = grid.areaColors!;
+    final gridColors = grid.areaColors;
 
     final hCount = grid.horizontalSpan != null
-        ? (area.width / grid.horizontalSpan!).ceil()
-        : grid.horizontalSpanCount ?? 0;
+        ? (size.width / grid.horizontalSpan!).ceil()
+        : grid.horizontalSpanCount ?? 1;
     final hSpan = grid.horizontalSpan != null
         ? grid.horizontalSpan!
         : size.width / hCount;
 
     final vCount = grid.verticalSpan != null
-        ? (size.width / grid.verticalSpan!).ceil()
-        : grid.verticalSpanCount ?? 0;
+        ? (size.height / grid.verticalSpan!).ceil()
+        : grid.verticalSpanCount ?? 1;
     final vSpan =
         grid.verticalSpan != null ? grid.verticalSpan! : size.height / vCount;
 
@@ -115,46 +76,52 @@ class LineChartGridPainter extends CustomPainter {
       canvas.translate(0, size.height);
       canvas.scale(1, -1);
 
-      for (final i in List.generate(vCount, (i) => i)) {
+      if (gridColors != null) {
+        for (final i in List.generate(vCount, (i) => i)) {
+          for (final j in List.generate(hCount, (j) => j)) {
+            final color = gridColors(i, j);
+            canvas.drawRect(
+              Rect.fromLTWH((j * hSpan).toDouble(), (i * vSpan).toDouble(),
+                  hSpan.toDouble(), vSpan.toDouble()),
+              Paint()..color = color,
+            );
+          }
+        }
+      }
+
+      if (grid.style.verticalLine != null) {
+        for (final i in List.generate(vCount, (i) => i)) {
+          if (i > 0) {
+            final vlStyle = grid.style.verticalLine!;
+            canvas.drawLine(
+              Offset(0, (i * vSpan).toDouble()),
+              Offset(
+                size.width,
+                (i * vSpan).toDouble(),
+              ),
+              Paint()
+                ..strokeWidth = vlStyle.width!
+                ..color = vlStyle.color!,
+            );
+          }
+        }
+      }
+
+      if (grid.style.horizontalLine != null) {
         for (final j in List.generate(hCount, (j) => j)) {
-          final color = gridColors(i, j);
-          canvas.drawRect(
-            Rect.fromLTWH((j * hSpan).toDouble(), (i * vSpan).toDouble(),
-                hSpan.toDouble(), vSpan.toDouble()),
-            Paint()..color = color,
-          );
-        }
-      }
-
-      for (final i in List.generate(vCount, (i) => i)) {
-        if (i > 0) {
-          final vlStyle = grid.style.verticalLine;
-          canvas.drawLine(
-            Offset(0, (i * vSpan).toDouble()),
-            Offset(
-              size.width,
-              (i * vSpan).toDouble(),
-            ),
-            Paint()
-              ..strokeWidth = vlStyle.width
-              ..color = vlStyle.color,
-          );
-        }
-      }
-
-      for (final j in List.generate(hCount, (j) => j)) {
-        if (j > 0) {
-          final hlStyle = grid.style.horizontalLine;
-          canvas.drawLine(
-            Offset((j * hSpan).toDouble(), 0),
-            Offset(
-              (j * hSpan).toDouble(),
-              size.width,
-            ),
-            Paint()
-              ..strokeWidth = hlStyle.width
-              ..color = hlStyle.color,
-          );
+          if (j > 0) {
+            final hlStyle = grid.style.horizontalLine!;
+            canvas.drawLine(
+              Offset((j * hSpan).toDouble(), 0),
+              Offset(
+                (j * hSpan).toDouble(),
+                size.height,
+              ),
+              Paint()
+                ..strokeWidth = hlStyle.width!
+                ..color = hlStyle.color!,
+            );
+          }
         }
       }
 

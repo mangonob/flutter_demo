@@ -34,118 +34,150 @@ class LineChartAxisPainter extends CustomPainter {
   }
 
   void _paintAxis(Canvas canvas, Size size) {
-    if (xAxis != null) {
+    if (this.xAxis != null) {
+      final xAxis = this.xAxis!;
       canvas.save();
       canvas.translate(0, size.height);
 
-      final lineStyle = xAxis?.style.lineStyle;
-      if (lineStyle != null) {
-        canvas.drawLine(
-          Offset.zero,
-          Offset(size.width, 0),
-          Paint()
-            ..strokeWidth = lineStyle.width
-            ..strokeCap = StrokeCap.square
-            ..color = lineStyle.color,
-        );
-      }
+      final lineStyle = xAxis.style.lineStyle;
+      canvas.drawLine(
+        Offset.zero,
+        Offset(size.width, 0),
+        Paint()
+          ..strokeWidth = lineStyle.width!
+          ..strokeCap = StrokeCap.square
+          ..color = lineStyle.color!,
+      );
 
-      double step;
-      int count;
-      if (xAxis!.tickSpan != null) {
-        step = xAxis!.tickSpan!.toDouble();
-        count = (area.width / step).floor();
-      } else {
-        count = xAxis!.tickSpanCount!;
-        step = area.width / count;
-      }
+      if (xAxis.style.hasLabel) {
+        final unit = size.width / area.width;
 
-      final unit = size.width / area.width;
+        if (xAxis.labelStops != null) {
+          final valueStyles = xAxis.labelStops!();
+          for (final t in valueStyles) {
+            final value = t.item1;
+            final style = t.item2 ?? xAxis.style.labelStyle;
+            _drawLabel(
+              canvas,
+              Offset(unit * value, 0),
+              label: xAxis.formatter == null
+                  ? value.toString()
+                  : xAxis.formatter!(value),
+              unit: unit,
+              style: style,
+            );
+          }
+        } else {
+          double step;
+          int count;
+          if (xAxis.tickSpan != null) {
+            step = xAxis.tickSpan!.toDouble();
+            count = (area.width / step).floor();
+          } else {
+            count = xAxis.tickSpanCount!;
+            step = area.width / count;
+          }
 
-      List.generate(count + 1, (i) => i).forEach((index) {
-        final value = step * index + area.minX;
-        final axisStyle = xAxis!.style;
-        final tickStyle = axisStyle.tickStyle;
+          List.generate(count + 1, (i) => i).forEach((index) {
+            final value = step * index + area.minX;
+            final axisStyle = xAxis.style;
+            final tickStyle = axisStyle.tickStyle;
 
-        // Draw x-Axis tick
-        if (axisStyle.hasTick && count != 0 && axisStyle.tickSize != 0) {
-          canvas.drawLine(
-            Offset(step * index * unit, -axisStyle.tickSize),
-            Offset(step * index * unit, 0),
-            Paint()
-              ..color = tickStyle.color
-              ..strokeWidth = tickStyle.width,
-          );
+            // Draw x-Axis tick
+            if (axisStyle.hasTick && count != 0 && axisStyle.tickSize != 0) {
+              canvas.drawLine(
+                Offset(step * index * unit, -axisStyle.tickSize),
+                Offset(step * index * unit, 0),
+                Paint()
+                  ..color = tickStyle.color!
+                  ..strokeWidth = tickStyle.width!,
+              );
+            }
+
+            _drawLabel(
+              canvas,
+              Offset(step * index * unit, 0),
+              label: xAxis.formatter == null
+                  ? value.toString()
+                  : xAxis.formatter!(value),
+              unit: unit,
+              style: axisStyle.labelStyle,
+            );
+          });
         }
-
-        _drawLabel(
-          canvas,
-          Offset(step * index * unit, 0),
-          label: xAxis!.formatter == null
-              ? value.toString()
-              : xAxis!.formatter!(value),
-          unit: unit,
-          style: axisStyle,
-          isFirst: index == 0,
-          isLast: index == count,
-        );
-      });
+      }
 
       canvas.restore();
     }
 
-    if (yAxis != null) {
-      final lineStyle = yAxis?.style.lineStyle;
-      if (lineStyle != null) {
-        canvas.drawLine(
-          Offset.zero,
-          Offset(0, size.height),
-          Paint()
-            ..strokeWidth = lineStyle.width
-            ..color = lineStyle.color,
-        );
-      }
+    if (this.yAxis != null) {
+      final yAxis = this.yAxis!;
+      final lineStyle = yAxis.style.lineStyle;
+      canvas.drawLine(
+        Offset.zero,
+        Offset(0, size.height),
+        Paint()
+          ..strokeWidth = lineStyle.width!
+          ..color = lineStyle.color!,
+      );
 
-      double step;
-      int count;
-      if (yAxis!.tickSpan != null) {
-        step = yAxis!.tickSpan!.toDouble();
-        count = (area.height / step).floor();
-      } else {
-        count = yAxis!.tickSpanCount!;
-        step = area.height / count;
-      }
+      if (yAxis.style.hasLabel == true) {
+        final unit = size.height / area.height;
 
-      final unit = size.height / area.height;
+        if (yAxis.labelStops != null) {
+          final valueStyles = yAxis.labelStops!();
+          for (final t in valueStyles) {
+            final value = t.item1;
+            final style = t.item2 ?? yAxis.style.labelStyle;
+            _drawLabel(
+              canvas,
+              Offset(0, size.height - unit * value),
+              label: yAxis.formatter == null
+                  ? value.toString()
+                  : yAxis.formatter!(value),
+              unit: unit,
+              style: style,
+            );
+          }
+        } else {
+          double step;
+          int count;
+          if (yAxis.tickSpan != null) {
+            step = yAxis.tickSpan!.toDouble();
+            count = (area.height / step).floor();
+          } else {
+            count = yAxis.tickSpanCount!;
+            step = area.height / count;
+          }
 
-      List.generate(count + 1, (i) => i).forEach((index) {
-        final value = step * index + area.minY;
-        final axisStyle = yAxis!.style;
-        final tickStyle = axisStyle.tickStyle;
+          List.generate(count + 1, (i) => i).forEach((index) {
+            final value = step * index + area.minY;
+            final axisStyle = yAxis.style;
+            final tickStyle = axisStyle.tickStyle;
 
-        // Draw y-Axis tick
-        if (axisStyle.hasTick && count != 0 && axisStyle.tickSize != 0) {
-          canvas.drawLine(
-            Offset(0, size.height - step * index * unit),
-            Offset(axisStyle.tickSize, size.height - step * index * unit),
-            Paint()
-              ..color = tickStyle.color
-              ..strokeWidth = tickStyle.width,
-          );
+            // Draw y-Axis tick
+            if (axisStyle.hasTick && count != 0 && axisStyle.tickSize != 0) {
+              canvas.drawLine(
+                Offset(0, size.height - step * index * unit),
+                Offset(axisStyle.tickSize, size.height - step * index * unit),
+                Paint()
+                  ..color = tickStyle.color!
+                  ..strokeWidth = tickStyle.width!,
+              );
+            }
+
+            _drawLabel(
+              canvas,
+              Offset(0, size.height - step * index * unit),
+              label: yAxis.formatter == null
+                  ? value.toString()
+                  : yAxis.formatter!(value),
+              unit: unit,
+              style: axisStyle.labelStyle,
+            );
+          });
         }
-
-        _drawLabel(
-          canvas,
-          Offset(0, size.height - step * index * unit),
-          label: yAxis!.formatter == null
-              ? value.toString()
-              : yAxis!.formatter!(value),
-          unit: unit,
-          style: axisStyle,
-          isFirst: index == 0,
-          isLast: index == count,
-        );
-      });
+      }
     }
   }
 
@@ -154,21 +186,14 @@ class LineChartAxisPainter extends CustomPainter {
     Offset offset, {
     required String label,
     required num unit,
-    required LineChartAxisStyle style,
-    bool isFirst = false,
-    bool isLast = false,
+    required LineChartAxisLabelStyle style,
   }) {
     canvas.save();
     canvas.translate(offset.dx, offset.dy);
 
-    final textStyle = style.labelStyle;
-    final padding = style.labelPadding;
-    final alignment = (isFirst
-            ? style.firstLabelAlignment
-            : isLast
-                ? style.lastLabelAlignment
-                : null) ??
-        style.labelAlignment;
+    final textStyle = style.textStyle;
+    final padding = style.padding;
+    final alignment = style.alignment;
 
     final tp = TextPainter(
       textDirection: TextDirection.ltr,

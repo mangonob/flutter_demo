@@ -16,6 +16,16 @@ class Area {
   num get minY => _yRange.low;
   num get maxY => _yRange.high;
 
+  @override
+  bool operator ==(other) {
+    return other is Area &&
+        _xRange == other._xRange &&
+        _yRange == other._yRange;
+  }
+
+  @override
+  int get hashCode => hashValues(_xRange, _yRange);
+
   Offset convertPointFromGrid(Offset point, {required Size gridSize}) {
     final hUnit = width / gridSize.width;
     final vUnit = height / gridSize.height;

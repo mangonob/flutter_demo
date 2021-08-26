@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/charts_demo/line_chart_demo.dart';
 import 'package:flutter_demo/charts_demo/pie_chart_demo.dart';
 
 class ChartsDemo extends StatelessWidget {
@@ -27,6 +28,9 @@ class ChartsDemo extends StatelessWidget {
           ),
           ListTile(
             title: Text("Line Chart"),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (ctx) => LineChartDemo()),
+            ),
           ),
         ],
       ),

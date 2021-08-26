@@ -17,6 +17,8 @@ class LineChartPainter extends CustomPainter {
   final EdgeInsets padding;
   final Offset? activePosition;
   final Area area;
+  final Offset Function(Offset indicatorPosition, Offset userPosition)?
+      customIndicatorPosition;
 
   LineChartPainter({
     this.grid,
@@ -28,10 +30,14 @@ class LineChartPainter extends CustomPainter {
     this.activePosition,
     this.style,
     required this.area,
+    this.customIndicatorPosition,
   }) : super();
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant LineChartPainter oldDelegate) {
+    return activePosition != oldDelegate.activePosition ||
+        area != oldDelegate.area;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -58,8 +64,9 @@ class LineChartPainter extends CustomPainter {
     canvas.clipRect(Rect.fromLTWH(0, 0, size.width, size.height));
 
     final activePosition = this.activePosition!;
-    final position = activePosition.translate(-padding.left, -padding.top);
-    final point = area.convertPointFromGrid(position, gridSize: size);
+    final relativePosition =
+        activePosition.translate(-padding.left, -padding.top);
+    final point = area.convertPointFromGrid(relativePosition, gridSize: size);
 
     final style = this.style!;
     final hI = style.horizontalIndicatorLine;
@@ -72,39 +79,41 @@ class LineChartPainter extends CustomPainter {
               serie.nearest(
                 point: point,
                 inHorizontal:
-                    style.indicaotrMainAxis == IndicatorMainAxis.horzontal,
+                    style.indicatorMainAxis == IndicatorMainAxis.vertical,
               ),
             ))
         .where((t) => t.item2 != null)
         .map((t) => Tuple2(t.item1, t.item2!));
 
-    if (serieNearest.isEmpty) return;
+    if (serieNearest.isEmpty) {
+      canvas.restore();
+      return;
+    }
 
     final choiced = serieNearest.last;
-    final activeSerie = choiced.item1;
-    final activeData = choiced.item2.item1;
-    final activePoint =
+    final nearestPosition =
         area.convertPointToGird(choiced.item2.item2, gridSize: size);
-    final onActived = activeSerie.onActived;
-    onActived!(activeData);
-
-    if (hI != null) {
-      canvas.drawLine(
-        Offset(activePoint.dx, 0),
-        Offset(activePoint.dx, size.height),
-        Paint()
-          ..strokeWidth = hI.width
-          ..color = hI.color,
-      );
-    }
+    final indicatorCrossPosition = customIndicatorPosition != null
+        ? customIndicatorPosition!(nearestPosition, relativePosition)
+        : relativePosition;
 
     if (vI != null) {
       canvas.drawLine(
-        Offset(0, activePoint.dy),
-        Offset(size.width, activePoint.dy),
+        Offset(indicatorCrossPosition.dx, 0),
+        Offset(indicatorCrossPosition.dx, size.height),
         Paint()
-          ..strokeWidth = vI.width
-          ..color = vI.color,
+          ..strokeWidth = vI.width!
+          ..color = vI.color!,
+      );
+    }
+
+    if (hI != null) {
+      canvas.drawLine(
+        Offset(0, indicatorCrossPosition.dy),
+        Offset(size.width, indicatorCrossPosition.dy),
+        Paint()
+          ..strokeWidth = hI.width!
+          ..color = hI.color!,
       );
     }
 
@@ -113,8 +122,10 @@ class LineChartPainter extends CustomPainter {
       final size = style.indicatorSize!;
       indicator.createBoxPainter().paint(
           canvas,
-          Offset(activePoint.dx - size.width / 2,
-              activePoint.dy - size.height / 2),
+          Offset(
+            indicatorCrossPosition.dx - size.width / 2,
+            indicatorCrossPosition.dy - size.height / 2,
+          ),
           ImageConfiguration(size: size));
     }
 

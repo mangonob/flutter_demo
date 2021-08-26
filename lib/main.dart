@@ -6,8 +6,6 @@ import 'package:flutter_demo/routes/routes.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
-  StyleFactory.style = CustomChartStyle();
-
   runApp(
     MaterialApp(
       routes: {
@@ -20,9 +18,4 @@ void main() {
       builder: EasyLoading.init(),
     ),
   );
-}
-
-class CustomChartStyle extends MaterialStyle {
-  @override
-  Color get arcStrokeColor => Color.transparent;
 }

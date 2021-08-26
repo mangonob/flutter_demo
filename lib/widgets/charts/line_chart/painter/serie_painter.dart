@@ -53,11 +53,11 @@ class LineChartSeriesPainter extends CustomPainter {
       path,
       Paint()
         ..style = PaintingStyle.stroke
-        ..color = style.lineStyle.color
+        ..color = style.lineStyle.color!
         ..strokeCap = StrokeCap.round
         ..strokeJoin = StrokeJoin.round
         ..strokeJoin = style.strokeJoin
-        ..strokeWidth = style.lineStyle.width,
+        ..strokeWidth = style.lineStyle.width!,
     );
   }
 

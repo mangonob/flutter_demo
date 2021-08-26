@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter_demo/widgets/charts/charts.dart';
 import 'package:quiver/iterables.dart';
 import 'package:tuple/tuple.dart';
 
@@ -17,7 +18,10 @@ class LineChartSerie<D> {
   final List<D> data;
   late ValueConvertor<D> xValue;
   late ValueConvertor<D> yValue;
-  final void Function(D data)? onActived;
+  final void Function(dynamic data)? onActived;
+  final void Function()? onDeactived;
+  final String? Function(D data, LineChartLabelPosition position)?
+      indicatorLabelFormatter;
 
   /// Custom series for each points.
   final LineChartSerieStyle? Function(D x, int index)? styles;
@@ -29,6 +33,8 @@ class LineChartSerie<D> {
     ValueConvertor<D>? yValue,
     this.styles,
     this.onActived,
+    this.onDeactived,
+    this.indicatorLabelFormatter,
   }) {
     this.xValue = xValue ??
         ((d, _) {

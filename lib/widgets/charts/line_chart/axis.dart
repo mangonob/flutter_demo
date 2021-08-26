@@ -1,3 +1,5 @@
+import 'package:tuple/tuple.dart';
+
 import 'range.dart';
 import 'style.dart';
 
@@ -9,6 +11,7 @@ class LineChartAxis {
   final LineChartAxisStyle style;
   final Range Function(Range range)? rangeCreator;
   final String Function(num value)? formatter;
+  final List<Tuple2<num, LineChartAxisLabelStyle?>> Function()? labelStops;
 
   Range range(Iterable<Range> Function() lazyRanges) {
     if (minValue != null && maxValue != null) {
@@ -34,6 +37,7 @@ class LineChartAxis {
     this.style = const LineChartAxisStyle(),
     this.rangeCreator,
     this.formatter,
+    this.labelStops,
   });
 
   LineChartAxis copyWith({
@@ -44,6 +48,7 @@ class LineChartAxis {
     LineChartAxisStyle? style,
     Range Function(Range range)? rangeCreator,
     String Function(num value)? formatter,
+    List<num> Function()? labelStops,
   }) {
     return LineChartAxis(
       minValue: minValue ?? this.minValue,
