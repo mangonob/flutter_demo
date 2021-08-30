@@ -32,36 +32,56 @@ class _SliverExampleState extends State<SliverExample>
       ),
       // No appbar provided to the Scaffold, only a body with a
       // CustomScrollView.
-      body: ExtendedNestedScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        onlyOneScrollInBody: true,
-        headerSliverBuilder: (ctx, _) {
-          return [
-            SliverToBoxAdapter(
-              child: Container(
-                height: 100,
-                color: Colors.green,
+      body: RefreshIndicator(
+        onRefresh: () async {},
+        child: ExtendedNestedScrollView(
+          physics: BouncingScrollPhysics(),
+          onlyOneScrollInBody: false,
+          headerSliverBuilder: (ctx, _) {
+            return [
+              SliverToBoxAdapter(
+                child: Container(
+                  height: 100,
+                  color: Colors.green,
+                ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                height: 80,
-                color: Colors.orange,
+              SliverAppBar(
+                title: Text("Some"),
+                // expandedHeight: 100,
+                collapsedHeight: 100,
+                toolbarHeight: 44,
+                floating: true,
+                pinned: true,
               ),
-            ),
-            SliverPersistentHeader(
-              delegate: MyHeader(),
-              pinned: true,
-            ),
-          ];
-        },
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            _SomeListView(),
-            _SomeListView(),
-            _SomeListView(),
-          ],
+              SliverToBoxAdapter(
+                child: Container(
+                  height: 100,
+                  color: Colors.green,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Container(
+                  height: 80,
+                  color: Colors.orange,
+                ),
+              ),
+              SliverPersistentHeader(
+                delegate: MyHeader(),
+                pinned: true,
+              ),
+            ];
+          },
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              _SomeListView(),
+              Center(child: Text("A")),
+              Center(child: Text("A")),
+              // _SomeListView(),
+              // _SomeListView(),
+              // _SomeListView(),
+            ],
+          ),
         ),
       ),
     );
@@ -72,8 +92,10 @@ class _SomeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children:
-          List.generate(40, (index) => ListTile(title: Text("Item $index"))),
+      children: List.generate(
+        40,
+        (index) => ListTile(title: Text("Item $index")),
+      ),
     );
   }
 }
