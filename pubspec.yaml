@@ -36,6 +36,7 @@ dependencies:
   extended_nested_scroll_view: ^4.0.0
   focus_detector: ^2.0.0
   reorderables: ^0.4.1
+  random_color: ^1.0.6-nullsafety
 
 dev_dependencies:
   flutter_test:

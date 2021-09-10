@@ -165,6 +165,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.1"
+  random_color:
+    dependency: "direct main"
+    description:
+      name: random_color
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.6-nullsafety"
   reorderables:
     dependency: "direct main"
     description:
