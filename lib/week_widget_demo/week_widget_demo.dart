@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/animated_icon_demo.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/fractional.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/limited_box_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/wheel_list.dart';
 import 'package:flutter_demo/widgets/general_scaffold.dart';
 
@@ -12,7 +15,19 @@ class WeekWidgetDemo extends StatelessWidget {
           _Tile(
             title: "ListWheelScrollView",
             pageBuilder: (ctx) => WheelList(),
-          )
+          ),
+          _Tile(
+            title: "FractionallySizedBox",
+            pageBuilder: (ctx) => Fractional(),
+          ),
+          _Tile(
+            title: "LimitedBox",
+            pageBuilder: (ctx) => LimitedBoxDemo(),
+          ),
+          _Tile(
+            title: "AnimatedIcon",
+            pageBuilder: (ctx) => AnimatedIconDemo(),
+          ),
         ],
       ),
     );
