@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/animated_icon_demo.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/data_table_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/drag.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/fractional.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/inherited_model_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/limited_box_demo.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/table_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/wheel_list.dart';
 import 'package:flutter_demo/widgets/general_scaffold.dart';
+
+import 'submodule/wrap_demo.dart';
 
 class WeekWidgetDemo extends StatelessWidget {
   @override
@@ -32,6 +37,22 @@ class WeekWidgetDemo extends StatelessWidget {
           _Tile(
             title: "Dragable",
             pageBuilder: (ctx) => Drag(),
+          ),
+          _Tile(
+            title: "Wrap",
+            pageBuilder: (ctx) => WrapDemo(),
+          ),
+          _Tile(
+            title: "Table",
+            pageBuilder: (ctx) => TableDemo(),
+          ),
+          _Tile(
+            title: "DataTable",
+            pageBuilder: (ctx) => DataTableDemo(),
+          ),
+          _Tile(
+            title: "InheritedModel",
+            pageBuilder: (ctx) => InheritedModelDemo(),
           ),
         ],
       ),
