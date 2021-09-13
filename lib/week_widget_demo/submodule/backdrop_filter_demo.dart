@@ -1,9 +1,34 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/widgets/general_scaffold.dart';
 
-class BackdropFilterDemo extends StatelessWidget {
+class BackdropFilterDemo extends StatefulWidget {
+  @override
+  _BackdropFilterDemoState createState() => _BackdropFilterDemoState();
+}
+
+class _BackdropFilterDemoState extends State<BackdropFilterDemo>
+    with TickerProviderStateMixin {
+  bool _isBlur = false;
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 250),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GeneralScaffold(
@@ -23,8 +48,17 @@ class BackdropFilterDemo extends StatelessWidget {
                 ),
               ),
               Positioned.fill(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (ctx, child) {
+                    return BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: _animationController.value * 10,
+                        sigmaY: _animationController.value * 10,
+                      ),
+                      child: child,
+                    );
+                  },
                   child: Container(
                     child: Center(
                       child: Text("NoFilter"),
@@ -34,7 +68,16 @@ class BackdropFilterDemo extends StatelessWidget {
               )
             ],
           ),
-          Text("Text in Column child"),
+          CupertinoSwitch(
+              value: _isBlur,
+              onChanged: (v) {
+                setState(() {
+                  _isBlur = v;
+                  _isBlur
+                      ? _animationController.forward()
+                      : _animationController.reverse();
+                });
+              }),
         ],
       ),
     );

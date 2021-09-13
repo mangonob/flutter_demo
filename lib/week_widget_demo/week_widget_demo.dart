@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/animated_icon_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/backdrop_filter_demo.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/curve_demo/curve_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/data_table_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/drag.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/fractional.dart';
@@ -58,6 +59,10 @@ class WeekWidgetDemo extends StatelessWidget {
           _Tile(
             title: "BackdropFilter",
             pageBuilder: (ctx) => BackdropFilterDemo(),
+          ),
+          _Tile(
+            title: "Curve",
+            pageBuilder: (ctx) => CurveDemo(),
           ),
         ],
       ),
