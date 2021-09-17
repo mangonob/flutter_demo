@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/animated_icon_demo.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/animations_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/backdrop_filter_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/curve_demo/curve_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/data_table_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/drag.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/fractional.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/inherited_model_demo.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/interactive_viewer_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/limited_box_demo.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/physical_model_demo.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/shader_mask_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/table_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/wheel_list.dart';
 import 'package:flutter_demo/widgets/general_scaffold.dart';
@@ -20,6 +24,26 @@ class WeekWidgetDemo extends StatelessWidget {
       title: "Widgets",
       body: ListView(
         children: [
+          _Tile(
+            title: "Animations",
+            pageBuilder: (ctx) => AnimationsDemo(),
+          ),
+          _Tile(
+            title: "PhysicalModel",
+            pageBuilder: (ctx) => PhysicalModelDemo(),
+          ),
+          _Tile(
+            title: "ShaderMask",
+            pageBuilder: (ctx) => ShaderMaskDemo(),
+          ),
+          _Tile(
+            title: "InteractiveViewer",
+            pageBuilder: (ctx) => InteractiveViewerDemo(),
+          ),
+          _Tile(
+            title: "Curve",
+            pageBuilder: (ctx) => CurveDemo(),
+          ),
           _Tile(
             title: "ListWheelScrollView",
             pageBuilder: (ctx) => WheelList(),
@@ -59,10 +83,6 @@ class WeekWidgetDemo extends StatelessWidget {
           _Tile(
             title: "BackdropFilter",
             pageBuilder: (ctx) => BackdropFilterDemo(),
-          ),
-          _Tile(
-            title: "Curve",
-            pageBuilder: (ctx) => CurveDemo(),
           ),
         ],
       ),

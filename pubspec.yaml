@@ -38,6 +38,7 @@ dependencies:
   reorderables: ^0.4.1
   random_color: ^1.0.6-nullsafety
   async: ^2.6.1
+  animations: ^2.0.1
 
 dev_dependencies:
   flutter_test:
