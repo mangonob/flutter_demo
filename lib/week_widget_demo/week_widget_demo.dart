@@ -5,6 +5,7 @@ import 'package:flutter_demo/week_widget_demo/submodule/backdrop_filter_demo.dar
 import 'package:flutter_demo/week_widget_demo/submodule/curve_demo/curve_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/data_table_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/drag.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/flutter_animation_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/fractional.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/inherited_model_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/interactive_viewer_demo.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_demo/week_widget_demo/submodule/limited_box_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/physical_model_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/shader_mask_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/table_demo.dart';
+import 'package:flutter_demo/week_widget_demo/submodule/tree.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/wheel_list.dart';
 import 'package:flutter_demo/widgets/general_scaffold.dart';
 
@@ -24,6 +26,14 @@ class WeekWidgetDemo extends StatelessWidget {
       title: "Widgets",
       body: ListView(
         children: [
+          _Tile(
+            title: "Widget Tree",
+            pageBuilder: (ctx) => Tree(),
+          ),
+          _Tile(
+            title: "Flutter Animations",
+            pageBuilder: (ctx) => FlutterAnimationDemo(),
+          ),
           _Tile(
             title: "Animations",
             pageBuilder: (ctx) => AnimationsDemo(),
