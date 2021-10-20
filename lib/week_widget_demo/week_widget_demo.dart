@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/demos/dropdown_overlay_demo.dart';
+import 'package:flutter_demo/demos/tree_map_demo.dart';
+import 'package:flutter_demo/slider_demo/slider_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/animated_icon_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/animations_demo.dart';
 import 'package:flutter_demo/week_widget_demo/submodule/backdrop_filter_demo.dart';
@@ -26,6 +29,18 @@ class WeekWidgetDemo extends StatelessWidget {
       title: "Widgets",
       body: ListView(
         children: [
+          _Tile(
+            title: "Dropdown Overlay",
+            pageBuilder: (ctx) => DropdownOverlayDemo(),
+          ),
+          _Tile(
+            title: "Slider",
+            pageBuilder: (ctx) => SliderDemo(),
+          ),
+          _Tile(
+            title: "Tree Map",
+            pageBuilder: (ctx) => TreeMapDemo(),
+          ),
           _Tile(
             title: "Widget Tree",
             pageBuilder: (ctx) => Tree(),
