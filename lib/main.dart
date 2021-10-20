@@ -3,10 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/only_text.dart';
 import 'package:flutter_demo/routes/routes.dart';
-import 'package:flutter_demo/tree_map/hnode.dart';
+import 'package:flutter_demo/tree_map/flat_node.dart';
 import 'package:flutter_demo/tree_map/leaf_node.dart';
 import 'package:flutter_demo/tree_map/tree_map.dart';
-import 'package:flutter_demo/tree_map/vnode.dart';
 import 'package:flutter_demo/widgets/general_scaffold.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -42,7 +41,7 @@ class _TreeMapDemoState extends State<TreeMapDemo> {
 
   _generateNewData() {
     final random = Random();
-    _datas = List.generate(14, (index) => random.nextInt(40) + 5);
+    _datas = List.generate(14, (index) => random.nextInt(120) + 40);
   }
 
   @override
@@ -60,105 +59,28 @@ class _TreeMapDemoState extends State<TreeMapDemo> {
       body: ListView(
         children: [
           Container(
-            height: 400,
+            height: 200,
             child: TreeMap(
-              rootNode: VNode(
-                children: [
-                  HNode(
-                    children: [
-                      VNode(
-                        forceValue: 0.5,
-                        children: [
-                          LeafNode(
-                            value: nextValue(),
-                            child: Container(
-                              color: Colors.red,
-                            ),
+              rootNode: FlatNode(
+                children: List.generate(
+                  5,
+                  (index) => LeafNode(
+                    value: nextValue(),
+                    child: Container(
+                      color: Colors.blue,
+                      child: Center(
+                        child: Text(
+                          index.toString(),
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
                           ),
-                          HNode(children: [
-                            VNode(
-                              children: [
-                                LeafNode(
-                                  value: nextValue(),
-                                  child: Container(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                                LeafNode(
-                                  value: nextValue(),
-                                  child: Container(
-                                    color: Colors.purple,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            LeafNode(
-                              value: nextValue(),
-                              child: Container(
-                                color: Colors.orange,
-                              ),
-                            ),
-                          ]),
-                        ],
+                        ),
                       ),
-                      VNode(
-                        forceValue: 0.5,
-                        children: [
-                          HNode(
-                            children: [
-                              VNode(
-                                children: [
-                                  LeafNode(
-                                    value: nextValue(),
-                                    child: Container(
-                                      color: Colors.yellow,
-                                    ),
-                                  ),
-                                  LeafNode(
-                                    value: nextValue(),
-                                    child: Container(
-                                      color: Colors.green,
-                                    ),
-                                  ),
-                                  LeafNode(
-                                    value: nextValue(),
-                                    child: Container(
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              LeafNode(
-                                value: nextValue(),
-                                child: Container(
-                                  color: Colors.orange,
-                                ),
-                              ),
-                              LeafNode(
-                                value: nextValue(),
-                                child: Container(
-                                  color: Colors.pink,
-                                ),
-                              ),
-                            ],
-                          ),
-                          LeafNode(
-                            value: nextValue(),
-                            child: Container(
-                              color: Colors.green,
-                            ),
-                          ),
-                          LeafNode(
-                            value: nextValue(),
-                            child: Container(
-                              color: Colors.yellow,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
