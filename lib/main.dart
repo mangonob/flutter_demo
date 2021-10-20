@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/only_text.dart';
 import 'package:flutter_demo/routes/routes.dart';
+import 'package:flutter_demo/slider_demo/slider_demo.dart';
 import 'package:flutter_demo/tree_map/flat_node.dart';
 import 'package:flutter_demo/tree_map/leaf_node.dart';
 import 'package:flutter_demo/tree_map/tree_map.dart';
@@ -18,7 +19,7 @@ void main() {
         Routes.third: (_) => OnlyText(text: "third"),
       },
       title: "My app",
-      home: TreeMapDemo(),
+      home: SliderDemo(),
       builder: EasyLoading.init(),
     ),
   );
