@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/tree_map/empty_node.dart';
 
+import 'empty_node.dart';
 import 'hnode.dart';
 import 'node_frame.dart';
 import 'tree_node.dart';
